@@ -28,10 +28,10 @@ namespace ASSIGMENT_Danh_Ba.Migrations
                 columns: table => new
                 {
                     IdDanhBa = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SDT1 = table.Column<int>(type: "int", nullable: true),
-                    SDT2 = table.Column<int>(type: "int", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    Note = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    SDT1 = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    SDT2 = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Note = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     IdNguoi = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>

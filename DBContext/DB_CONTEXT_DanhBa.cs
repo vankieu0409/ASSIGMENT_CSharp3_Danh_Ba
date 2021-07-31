@@ -5,8 +5,8 @@ namespace ASSIGMENT_Danh_Ba.DBContext
 {
     public class DB_CONTEXT_DanhBa:DbContext
     {
-        public DbSet<Nguoi> Nguois { get; set; }
-        public DbSet<DanhBa> DanhBas { get; set; }
+        public  DbSet<Nguoi> Nguois { get; set; }
+        public  DbSet<DanhBa> DanhBas { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(

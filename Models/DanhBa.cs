@@ -10,11 +10,13 @@ namespace ASSIGMENT_Danh_Ba.Models
     {
         [Key]
         public Guid IdDanhBa { get; set; }
-        public int? SDT1 { get; set; }
-        public int? SDT2 { get; set; }
         [StringLength(30)]
+        public string? SDT1 { get; set; }
+        [StringLength(30)]
+        public string? SDT2 { get; set; }
+        [StringLength(100)]
         public string? Email { get; set; }
-        [StringLength(30)]
+        [StringLength(100)]
         public string? Note { get; set; }
 
         public Guid IdNguoi { get; set; }

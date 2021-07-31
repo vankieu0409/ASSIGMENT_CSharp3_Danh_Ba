@@ -51,7 +51,7 @@ namespace ASSIGMENT_Danh_Ba
             this.txt_SDT_1 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.btn_clean = new System.Windows.Forms.Button();
+            this.btn_Luu = new System.Windows.Forms.Button();
             this.btn_Xoa = new System.Windows.Forms.Button();
             this.btn_sua = new System.Windows.Forms.Button();
             this.btn_them = new System.Windows.Forms.Button();
@@ -66,12 +66,13 @@ namespace ASSIGMENT_Danh_Ba
             this.rbtn_nu_search = new System.Windows.Forms.RadioButton();
             this.rbtn_nam_search = new System.Windows.Forms.RadioButton();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btn_xeptenNguoc = new System.Windows.Forms.Button();
+            this.btnSapXepAtoZ = new System.Windows.Forms.Button();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.button7 = new System.Windows.Forms.Button();
             this.btn_vina = new System.Windows.Forms.Button();
             this.btn_Viettel = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -202,6 +203,7 @@ namespace ASSIGMENT_Danh_Ba
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.txt_note);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.txt_Email);
@@ -283,7 +285,7 @@ namespace ASSIGMENT_Danh_Ba
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.btn_clean);
+            this.groupBox3.Controls.Add(this.btn_Luu);
             this.groupBox3.Controls.Add(this.btn_Xoa);
             this.groupBox3.Controls.Add(this.btn_sua);
             this.groupBox3.Controls.Add(this.btn_them);
@@ -294,32 +296,35 @@ namespace ASSIGMENT_Danh_Ba
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Chức Năng";
             // 
-            // btn_clean
+            // btn_Luu
             // 
-            this.btn_clean.Location = new System.Drawing.Point(6, 166);
-            this.btn_clean.Name = "btn_clean";
-            this.btn_clean.Size = new System.Drawing.Size(94, 29);
-            this.btn_clean.TabIndex = 3;
-            this.btn_clean.Text = "Clean";
-            this.btn_clean.UseVisualStyleBackColor = true;
+            this.btn_Luu.Location = new System.Drawing.Point(6, 202);
+            this.btn_Luu.Name = "btn_Luu";
+            this.btn_Luu.Size = new System.Drawing.Size(94, 29);
+            this.btn_Luu.TabIndex = 3;
+            this.btn_Luu.Text = "Lưu DB";
+            this.btn_Luu.UseVisualStyleBackColor = true;
+            this.btn_Luu.Click += new System.EventHandler(this.btn_Luu_Click);
             // 
             // btn_Xoa
             // 
-            this.btn_Xoa.Location = new System.Drawing.Point(6, 125);
+            this.btn_Xoa.Location = new System.Drawing.Point(6, 152);
             this.btn_Xoa.Name = "btn_Xoa";
             this.btn_Xoa.Size = new System.Drawing.Size(94, 29);
             this.btn_Xoa.TabIndex = 2;
             this.btn_Xoa.Text = "Xóa";
             this.btn_Xoa.UseVisualStyleBackColor = true;
+            this.btn_Xoa.Click += new System.EventHandler(this.btn_Xoa_Click);
             // 
             // btn_sua
             // 
-            this.btn_sua.Location = new System.Drawing.Point(6, 82);
+            this.btn_sua.Location = new System.Drawing.Point(6, 93);
             this.btn_sua.Name = "btn_sua";
             this.btn_sua.Size = new System.Drawing.Size(94, 29);
             this.btn_sua.TabIndex = 1;
             this.btn_sua.Text = "Sửa";
             this.btn_sua.UseVisualStyleBackColor = true;
+            this.btn_sua.Click += new System.EventHandler(this.btn_sua_Click);
             // 
             // btn_them
             // 
@@ -329,6 +334,7 @@ namespace ASSIGMENT_Danh_Ba
             this.btn_them.TabIndex = 0;
             this.btn_them.Text = "Thêm";
             this.btn_them.UseVisualStyleBackColor = true;
+            this.btn_them.Click += new System.EventHandler(this.btn_them_Click);
             // 
             // groupBox4
             // 
@@ -358,6 +364,8 @@ namespace ASSIGMENT_Danh_Ba
             this.txt_Seach_SDT.Size = new System.Drawing.Size(177, 27);
             this.txt_Seach_SDT.TabIndex = 3;
             this.txt_Seach_SDT.Text = "Nhập SĐT muốn tìm";
+            this.txt_Seach_SDT.TextChanged += new System.EventHandler(this.txt_Seach_SDT_TextChanged);
+            this.txt_Seach_SDT.MouseDown += new System.Windows.Forms.MouseEventHandler(this.txt_Seach_SDT_MouseDown);
             // 
             // txt_Search_ten
             // 
@@ -366,6 +374,8 @@ namespace ASSIGMENT_Danh_Ba
             this.txt_Search_ten.Size = new System.Drawing.Size(185, 27);
             this.txt_Search_ten.TabIndex = 2;
             this.txt_Search_ten.Text = "Nhập tên muốn tìm ";
+            this.txt_Search_ten.TextChanged += new System.EventHandler(this.txt_Search_ten_TextChanged);
+            this.txt_Search_ten.MouseDown += new System.Windows.Forms.MouseEventHandler(this.txt_Search_ten_MouseDown);
             // 
             // groupBox5
             // 
@@ -388,6 +398,7 @@ namespace ASSIGMENT_Danh_Ba
             this.dgv_DanhBa.RowTemplate.Height = 29;
             this.dgv_DanhBa.Size = new System.Drawing.Size(1146, 252);
             this.dgv_DanhBa.TabIndex = 0;
+            this.dgv_DanhBa.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_DanhBa_CellClick);
             // 
             // groupBox6
             // 
@@ -422,6 +433,7 @@ namespace ASSIGMENT_Danh_Ba
             this.rbtn_nu_search.TabStop = true;
             this.rbtn_nu_search.Text = "Nữ";
             this.rbtn_nu_search.UseVisualStyleBackColor = true;
+            this.rbtn_nu_search.CheckedChanged += new System.EventHandler(this.rbtn_nu_search_CheckedChanged);
             // 
             // rbtn_nam_search
             // 
@@ -434,11 +446,12 @@ namespace ASSIGMENT_Danh_Ba
             this.rbtn_nam_search.TabStop = true;
             this.rbtn_nam_search.Text = "Nam";
             this.rbtn_nam_search.UseVisualStyleBackColor = true;
+            this.rbtn_nam_search.CheckedChanged += new System.EventHandler(this.rbtn_nam_search_CheckedChanged);
             // 
             // groupBox8
             // 
-            this.groupBox8.Controls.Add(this.button6);
-            this.groupBox8.Controls.Add(this.button5);
+            this.groupBox8.Controls.Add(this.btn_xeptenNguoc);
+            this.groupBox8.Controls.Add(this.btnSapXepAtoZ);
             this.groupBox8.Location = new System.Drawing.Point(5, 92);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(424, 63);
@@ -446,23 +459,25 @@ namespace ASSIGMENT_Danh_Ba
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Tên";
             // 
-            // button6
+            // btn_xeptenNguoc
             // 
-            this.button6.Location = new System.Drawing.Point(226, 23);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(178, 29);
-            this.button6.TabIndex = 3;
-            this.button6.Text = "Sắp xếp theo Tên";
-            this.button6.UseVisualStyleBackColor = true;
+            this.btn_xeptenNguoc.Location = new System.Drawing.Point(226, 23);
+            this.btn_xeptenNguoc.Name = "btn_xeptenNguoc";
+            this.btn_xeptenNguoc.Size = new System.Drawing.Size(178, 29);
+            this.btn_xeptenNguoc.TabIndex = 3;
+            this.btn_xeptenNguoc.Text = "Sắp xếp theo Tên";
+            this.btn_xeptenNguoc.UseVisualStyleBackColor = true;
+            this.btn_xeptenNguoc.Click += new System.EventHandler(this.btn_xeptenNguoc_Click);
             // 
-            // button5
+            // btnSapXepAtoZ
             // 
-            this.button5.Location = new System.Drawing.Point(21, 24);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(178, 29);
-            this.button5.TabIndex = 2;
-            this.button5.Text = "A-->Z";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btnSapXepAtoZ.Location = new System.Drawing.Point(21, 24);
+            this.btnSapXepAtoZ.Name = "btnSapXepAtoZ";
+            this.btnSapXepAtoZ.Size = new System.Drawing.Size(178, 29);
+            this.btnSapXepAtoZ.TabIndex = 2;
+            this.btnSapXepAtoZ.Text = "A-->Z";
+            this.btnSapXepAtoZ.UseVisualStyleBackColor = true;
+            this.btnSapXepAtoZ.Click += new System.EventHandler(this.btnSapXepAtoZ_Click);
             // 
             // groupBox7
             // 
@@ -484,6 +499,7 @@ namespace ASSIGMENT_Danh_Ba
             this.button7.TabIndex = 3;
             this.button7.Text = "MobiPhone";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // btn_vina
             // 
@@ -493,6 +509,7 @@ namespace ASSIGMENT_Danh_Ba
             this.btn_vina.TabIndex = 2;
             this.btn_vina.Text = "VinaPhone";
             this.btn_vina.UseVisualStyleBackColor = true;
+            this.btn_vina.Click += new System.EventHandler(this.btn_vina_Click);
             // 
             // btn_Viettel
             // 
@@ -502,6 +519,17 @@ namespace ASSIGMENT_Danh_Ba
             this.btn_Viettel.TabIndex = 1;
             this.btn_Viettel.Text = "Viettel";
             this.btn_Viettel.UseVisualStyleBackColor = true;
+            this.btn_Viettel.Click += new System.EventHandler(this.btn_Viettel_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(15, 212);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(246, 29);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Clean ";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // ASSIGRMENTS
             // 
@@ -516,6 +544,7 @@ namespace ASSIGMENT_Danh_Ba
             this.Controls.Add(this.groupBox1);
             this.Name = "ASSIGRMENTS";
             this.Text = "ASSIGRMENTS";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ASSIGRMENTS_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -557,7 +586,7 @@ namespace ASSIGMENT_Danh_Ba
         private System.Windows.Forms.TextBox txt_SDT_1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button btn_clean;
+        private System.Windows.Forms.Button btn_Luu;
         private System.Windows.Forms.Button btn_Xoa;
         private System.Windows.Forms.Button btn_sua;
         private System.Windows.Forms.Button btn_them;
@@ -572,11 +601,12 @@ namespace ASSIGMENT_Danh_Ba
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.RadioButton rbtn_nu_search;
         private System.Windows.Forms.RadioButton rbtn_nam_search;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btn_xeptenNguoc;
+        private System.Windows.Forms.Button btnSapXepAtoZ;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button btn_vina;
         private System.Windows.Forms.Button btn_Viettel;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button button1;
     }
 }

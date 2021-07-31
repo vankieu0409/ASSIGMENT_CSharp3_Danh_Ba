@@ -26,21 +26,23 @@ namespace ASSIGMENT_Danh_Ba.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<Guid>("IdNguoi")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Note")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("SDT1")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<int?>("SDT1")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SDT2")
-                        .HasColumnType("int");
+                    b.Property<string>("SDT2")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("IdDanhBa");
 

@@ -2,7 +2,7 @@
 
 namespace ASSIGMENT_Danh_Ba.Migrations
 {
-    public partial class Danhba : Migration
+    public partial class DanhBa : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
