@@ -47,15 +47,14 @@ namespace ASSIGMENT_Danh_Ba
             if (check.checkString(txt_Ten.Text) || check.checkString(txt_ho.Text) || check.checkString(txt_tendem.Text)
                 || check.checkString(txt_Email.Text) || check.checkString(txt_note.Text))
             {
-                MessageBox.Show("bạn Phải Nhập chữ hoặc ký tự vào các Ô Họ,tên Đệm,tên, Email,Note ", Erorr);
+                MessageBox.Show("bạn Phải Nhập chữ hoặc ký tự vào các Ô Họ,tên Đệm,tên. \n Không được nhập Số!! 😒😒😒 ", Erorr);
                 return false;
             }
 
-            if (check.checkString(txt_SDT_1.Text) || check.checkString(txt_SDT_2.Text) ||
+            if (check.checkNumber(txt_SDT_1.Text) || check.checkNumber(txt_SDT_2.Text) ||
                 check.checkNumber(cbox_namsinh.Text))
-
             {
-                MessageBox.Show(" bạn Phải nhập Số vào Các ô Số điên thoại và Phải Chọn năm Sinh");
+                MessageBox.Show(" bạn Phải nhập Số vào Các ô Số điên thoại và Phải Chọn năm Sinh\n Không Được Nhập Chữ!! 😒😒😒");
                 return false;
             }
 
@@ -75,9 +74,9 @@ namespace ASSIGMENT_Danh_Ba
             lstNguoi = Sv.getListNguoi(); // đổ dữ liệu vài lis Hiện tại
             lstDanhBas = Sv.getlListDanhBa();
             var ListBig = (from a in lstNguoi
-                join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
-                select new
-                    {a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note}).ToList();
+                           join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
+                           select new
+                           { a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note }).ToList();
             dgv_DanhBa.ColumnCount = 9;
             dgv_DanhBa.Columns[0].Name = " Họ ";
             dgv_DanhBa.Columns[1].Name = " Tên Đệm";
@@ -100,52 +99,63 @@ namespace ASSIGMENT_Danh_Ba
 
         private void btn_them_Click(object sender, EventArgs e)
         {
-            CheckEveryThing();
-
-            Nguoi nguoi = new Nguoi();
-            nguoi.IdNguoi = Guid.NewGuid();
-            nguoi.Ho = txt_ho.Text;
-            nguoi.TenDem = txt_tendem.Text;
-            nguoi.Ten = txt_Ten.Text;
-            nguoi.NamSinh = Convert.ToInt16(cbox_namsinh.Text);
-            nguoi.GioiTinh = rbtn_Nam.Checked ? 1 : 0;
-            DanhBa danhBa = new DanhBa();
-            danhBa.IdDanhBa = Guid.NewGuid();
-            danhBa.SDT1 = txt_SDT_1.Text;
-            danhBa.SDT2 = txt_SDT_2.Text;
-            danhBa.Email = txt_Email.Text;
-            danhBa.Note = txt_note.Text;
-            danhBa.IdNguoi = nguoi.IdNguoi;
-            MessageBox.Show(Sv.Them(nguoi, danhBa), Erorr);
-            LoadDatabase();
-            flag = false;
+            if (CheckEveryThing() == false)
+            {
+                return;
+            }
+            else
+            {
+                Nguoi nguoi = new Nguoi();
+                nguoi.IdNguoi = Guid.NewGuid();
+                nguoi.Ho = txt_ho.Text;
+                nguoi.TenDem = txt_tendem.Text;
+                nguoi.Ten = txt_Ten.Text;
+                nguoi.NamSinh = Convert.ToInt16(cbox_namsinh.Text);
+                nguoi.GioiTinh = rbtn_Nam.Checked ? 1 : 0;
+                DanhBa danhBa = new DanhBa();
+                danhBa.IdDanhBa = Guid.NewGuid();
+                danhBa.SDT1 = txt_SDT_1.Text;
+                danhBa.SDT2 = txt_SDT_2.Text;
+                danhBa.Email = txt_Email.Text;
+                danhBa.Note = txt_note.Text;
+                danhBa.IdNguoi = nguoi.IdNguoi;
+                MessageBox.Show(Sv.Them(nguoi, danhBa), Erorr);
+                LoadDatabase();
+                flag = false;
+            }
         }
 
         private void btn_sua_Click(object sender, EventArgs e)
         {
-            CheckEveryThing();
-            var IDkey = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
-            Nguoi nguoi = Sv.getListNguoi().Where(c => c.IdNguoi == IDkey).FirstOrDefault();
-            nguoi.Ho = txt_ho.Text;
-            nguoi.TenDem = txt_tendem.Text;
-            nguoi.Ten = txt_Ten.Text;
-            nguoi.NamSinh = Convert.ToInt16(cbox_namsinh.Text);
-            nguoi.GioiTinh = rbtn_Nam.Checked ? 1 : 0;
-
-            var idDB = Sv.getlListDanhBa().Where(c => c.IdNguoi == IDkey).Select(c => c.IdDanhBa).FirstOrDefault();
-            DanhBa danhBa = Sv.getlListDanhBa().Where(c => c.IdDanhBa == idDB).FirstOrDefault();
-            danhBa.SDT1 = txt_SDT_1.Text;
-            danhBa.SDT2 = txt_SDT_2.Text;
-            danhBa.Email = txt_Email.Text;
-            danhBa.Note = txt_note.Text;
-            if (MessageBox.Show("Bạn Có muốn Sửa thông tin  Không??", Erorr, MessageBoxButtons.YesNo) ==
-                DialogResult.Yes)
+            if (CheckEveryThing() == false)
             {
-                MessageBox.Show(Sv.sua(nguoi, danhBa), Erorr);
+                return;
             }
+            else
+            {
+                var IDkey = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
+                Nguoi nguoi = Sv.getListNguoi().Where(c => c.IdNguoi == IDkey).FirstOrDefault();
+                nguoi.Ho = txt_ho.Text;
+                nguoi.TenDem = txt_tendem.Text;
+                nguoi.Ten = txt_Ten.Text;
+                nguoi.NamSinh = Convert.ToInt16(cbox_namsinh.Text);
+                nguoi.GioiTinh = rbtn_Nam.Checked ? 1 : 0;
 
-            LoadDatabase();
-            flag = false;
+                var idDB = Sv.getlListDanhBa().Where(c => c.IdNguoi == IDkey).Select(c => c.IdDanhBa).FirstOrDefault();
+                DanhBa danhBa = Sv.getlListDanhBa().Where(c => c.IdDanhBa == idDB).FirstOrDefault();
+                danhBa.SDT1 = txt_SDT_1.Text;
+                danhBa.SDT2 = txt_SDT_2.Text;
+                danhBa.Email = txt_Email.Text;
+                danhBa.Note = txt_note.Text;
+                if (MessageBox.Show("Bạn Có muốn Sửa thông tin  Không??", Erorr, MessageBoxButtons.YesNo) ==
+                    DialogResult.Yes)
+                {
+                    MessageBox.Show(Sv.sua(nguoi, danhBa), Erorr);
+                }
+
+                LoadDatabase();
+                flag = false;
+            }
         }
 
         private void ASSIGRMENTS_FormClosing(object sender, FormClosingEventArgs e)
@@ -187,7 +197,6 @@ namespace ASSIGMENT_Danh_Ba
 
         private void btn_Xoa_Click(object sender, EventArgs e)
         {
-            CheckEveryThing();
             var IDkey = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
             Nguoi nguoi = Sv.getListNguoi().Where(c => c.IdNguoi == IDkey).FirstOrDefault();
             DanhBa danhBa = Sv.getlListDanhBa().Where(c => c.IdNguoi == IDkey).FirstOrDefault();
@@ -198,7 +207,6 @@ namespace ASSIGMENT_Danh_Ba
             }
 
             LoadDatabase();
-
         }
 
         private void btn_Luu_Click(object sender, EventArgs e)
@@ -225,10 +233,10 @@ namespace ASSIGMENT_Danh_Ba
             lstNguoi = Sv.getListNguoi(); // đổ dữ liệu vài lis Hiện tại
             lstDanhBas = Sv.getlListDanhBa();
             var ListBig = (from a in lstNguoi
-                join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
-                where (a.Ten == acc || b.SDT1 == acc || b.SDT2 == acc)
-                select new
-                    {a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note}).ToList();
+                           join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
+                           where (a.Ten == acc || b.SDT1 == acc || b.SDT2 == acc)
+                           select new
+                           { a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note }).ToList();
             dgv_DanhBa.ColumnCount = 9;
             dgv_DanhBa.Columns[0].Name = " Họ ";
             dgv_DanhBa.Columns[1].Name = " Tên Đệm";
@@ -271,11 +279,11 @@ namespace ASSIGMENT_Danh_Ba
             lstNguoi = Sv.getListNguoi(); // đổ dữ liệu vài lis Hiện tại
             lstDanhBas = Sv.getlListDanhBa();
             var ListBig = (from a in lstNguoi
-                join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
-                where (b.SDT1.StartsWith("03") || b.SDT2.StartsWith("03") || b.SDT1.StartsWith("098") ||
-                       b.SDT2.StartsWith("098"))
-                select new
-                    {a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note}).ToList();
+                           join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
+                           where (b.SDT1.StartsWith("03") || b.SDT2.StartsWith("03") || b.SDT1.StartsWith("098") ||
+                                  b.SDT2.StartsWith("098"))
+                           select new
+                           { a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note }).ToList();
             dgv_DanhBa.ColumnCount = 9;
             dgv_DanhBa.Columns[0].Name = " Họ ";
             dgv_DanhBa.Columns[1].Name = " Tên Đệm";
@@ -300,10 +308,10 @@ namespace ASSIGMENT_Danh_Ba
             lstNguoi = Sv.getListNguoi(); // đổ dữ liệu vài lis Hiện tại
             lstDanhBas = Sv.getlListDanhBa();
             var ListBig = (from a in lstNguoi
-                join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
-                where (b.SDT1.StartsWith("08") || b.SDT2.StartsWith("08"))
-                select new
-                    {a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note}).ToList();
+                           join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
+                           where (b.SDT1.StartsWith("08") || b.SDT2.StartsWith("08"))
+                           select new
+                           { a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note }).ToList();
             dgv_DanhBa.ColumnCount = 9;
             dgv_DanhBa.Columns[0].Name = " Họ ";
             dgv_DanhBa.Columns[1].Name = " Tên Đệm";
@@ -328,10 +336,10 @@ namespace ASSIGMENT_Danh_Ba
             lstNguoi = Sv.getListNguoi(); // đổ dữ liệu vài lis Hiện tại
             lstDanhBas = Sv.getlListDanhBa();
             var ListBig = (from a in lstNguoi
-                join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
-                where (b.SDT1.StartsWith("07") || b.SDT2.StartsWith("07"))
-                select new
-                    {a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note}).ToList();
+                           join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
+                           where (b.SDT1.StartsWith("07") || b.SDT2.StartsWith("07"))
+                           select new
+                           { a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note }).ToList();
             dgv_DanhBa.ColumnCount = 9;
             dgv_DanhBa.Columns[0].Name = " Họ ";
             dgv_DanhBa.Columns[1].Name = " Tên Đệm";
@@ -356,10 +364,10 @@ namespace ASSIGMENT_Danh_Ba
             lstNguoi = Sv.getListNguoi(); // đổ dữ liệu vài lis Hiện tại
             lstDanhBas = Sv.getlListDanhBa();
             var ListBig = (from a in lstNguoi
-                join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
-                orderby a.Ten
-                select new
-                    {a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note}).ToList();
+                           join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
+                           orderby a.Ten
+                           select new
+                           { a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note }).ToList();
             dgv_DanhBa.ColumnCount = 9;
             dgv_DanhBa.Columns[0].Name = " Họ ";
             dgv_DanhBa.Columns[1].Name = " Tên Đệm";
@@ -384,10 +392,10 @@ namespace ASSIGMENT_Danh_Ba
             lstNguoi = Sv.getListNguoi(); // đổ dữ liệu vài lis Hiện tại
             lstDanhBas = Sv.getlListDanhBa();
             var ListBig = (from a in lstNguoi
-                join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
-                orderby a.Ten descending
-                select new
-                    {a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note}).ToList();
+                           join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
+                           orderby a.Ten descending
+                           select new
+                           { a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note }).ToList();
             dgv_DanhBa.ColumnCount = 9;
             dgv_DanhBa.Columns[0].Name = " Họ ";
             dgv_DanhBa.Columns[1].Name = " Tên Đệm";
@@ -413,10 +421,10 @@ namespace ASSIGMENT_Danh_Ba
             lstNguoi = Sv.getListNguoi(); // đổ dữ liệu vài lis Hiện tại
             lstDanhBas = Sv.getlListDanhBa();
             var ListBig = (from a in lstNguoi
-                join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
-                where (a.GioiTinh == 1)
-                select new
-                    {a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note}).ToList();
+                           join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
+                           where (a.GioiTinh == 1)
+                           select new
+                           { a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note }).ToList();
             dgv_DanhBa.ColumnCount = 9;
             dgv_DanhBa.Columns[0].Name = " Họ ";
             dgv_DanhBa.Columns[1].Name = " Tên Đệm";
@@ -441,10 +449,10 @@ namespace ASSIGMENT_Danh_Ba
             lstNguoi = Sv.getListNguoi(); // đổ dữ liệu vài lis Hiện tại
             lstDanhBas = Sv.getlListDanhBa();
             var ListBig = (from a in lstNguoi
-                join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
-                where (a.GioiTinh == 0)
-                select new
-                    {a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note}).ToList();
+                           join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
+                           where (a.GioiTinh == 0)
+                           select new
+                           { a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note }).ToList();
             dgv_DanhBa.ColumnCount = 9;
             dgv_DanhBa.Columns[0].Name = " Họ ";
             dgv_DanhBa.Columns[1].Name = " Tên Đệm";
@@ -466,6 +474,7 @@ namespace ASSIGMENT_Danh_Ba
 
         private void button1_Click(object sender, EventArgs e)
         {
+            txt_Ten.Enabled = true;
             txt_ho.Text = "";
             txt_tendem.Text = "";
             txt_Ten.Text = "";

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using ASSIGMENT_Danh_Ba.Interface;
 
 namespace ASSIGMENT_Danh_Ba.Sevices
@@ -16,9 +17,9 @@ namespace ASSIGMENT_Danh_Ba.Sevices
             return false;
         }
 
-        public bool checkNumber(string inpit)
+        public bool checkNumber(string input)
         {
-            if (inpit.All(char.IsNumber))
+            if (Regex.IsMatch(input,@"[^\d+$]")==true)
             {
                 return true;
             }
@@ -30,10 +31,10 @@ namespace ASSIGMENT_Danh_Ba.Sevices
         {
             if(string.IsNullOrWhiteSpace(text))
             {
-                return false;
+                return true;
             }
 
-            return true;
+            return false;
         }
     }
 }
