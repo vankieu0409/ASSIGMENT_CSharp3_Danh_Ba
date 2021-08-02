@@ -20,7 +20,8 @@ namespace ASSIGMENT_Danh_Ba
         private ICheck check;
         private List<DanhBa> lstDanhBas;
         private List<Nguoi> lstNguoi;
-        private string Erorr = "Thông báo của UBND xã Tuân Chính";
+        private string erorrmes=" Thông báo về việc ";
+        private string Erorr = "Thông báo của UBND xã Tuân Chính về việc";
         private int flag = -1;
 
         public ASSIGRMENTS()
@@ -40,21 +41,21 @@ namespace ASSIGMENT_Danh_Ba
         {
             if (check.checkNull(txt_Ten.Text) || check.checkNull(cbox_namsinh.Text))
             {
-                MessageBox.Show("Không được để trống Tên và năm sinh", Erorr);
+                MessageBox.Show(erorrmes+" Bạn Không được để trống Tên và năm sinh", Erorr);
                 return false;
             }
 
             if (check.checkString(txt_Ten.Text) || check.checkString(txt_ho.Text) || check.checkString(txt_tendem.Text)
                 || check.checkString(txt_Email.Text) || check.checkString(txt_note.Text))
             {
-                MessageBox.Show("bạn Phải Nhập chữ hoặc ký tự vào các Ô Họ,tên Đệm,tên. \n Không được nhập Số!! 😒😒😒 ", Erorr);
+                MessageBox.Show( erorrmes+" bạn Phải Nhập chữ hoặc ký tự vào các Ô Họ,tên Đệm,tên. \n Không được nhập Số!! 😒😒😒 ", Erorr);
                 return false;
             }
 
             if (check.checkNumber(txt_SDT_1.Text) || check.checkNumber(txt_SDT_2.Text) ||
                 check.checkNumber(cbox_namsinh.Text))
             {
-                MessageBox.Show(" bạn Phải nhập Số vào Các ô Số điên thoại và Phải Chọn năm Sinh\n Không Được Nhập Chữ!! 😒😒😒");
+                MessageBox.Show(erorrmes+" bạn Phải nhập Số vào Các ô Số điên thoại và Phải Chọn năm Sinh\n Không Được Nhập Chữ!! 😒😒😒");
                 return false;
             }
 
@@ -188,7 +189,7 @@ namespace ASSIGMENT_Danh_Ba
             var IDkey = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
             Nguoi nguoi = Sv.getListNguoi().Where(c => c.IdNguoi == IDkey).FirstOrDefault();
             DanhBa danhBa = Sv.getlListDanhBa().Where(c => c.IdNguoi == IDkey).FirstOrDefault();
-            if (MessageBox.Show("bạn có muốn Xóa thông tin và Liên Hệ\n của người này không?", Erorr,
+            if (MessageBox.Show(erorrmes+ " bạn có muốn Xóa thông tin và Liên Hệ\n của người này không?", Erorr,
                 MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 MessageBox.Show(Sv.Xoa(nguoi, danhBa), Erorr);
