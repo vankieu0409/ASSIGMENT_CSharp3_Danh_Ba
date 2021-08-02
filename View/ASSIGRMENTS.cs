@@ -21,7 +21,7 @@ namespace ASSIGMENT_Danh_Ba
         private List<DanhBa> lstDanhBas;
         private List<Nguoi> lstNguoi;
         private string Erorr = "Thông báo của UBND xã Tuân Chính";
-        private bool flag = true;
+        private int flag = -1;
 
         public ASSIGRMENTS()
         {
@@ -121,7 +121,7 @@ namespace ASSIGMENT_Danh_Ba
                 danhBa.IdNguoi = nguoi.IdNguoi;
                 MessageBox.Show(Sv.Them(nguoi, danhBa), Erorr);
                 LoadDatabase();
-                flag = false;
+                flag = 1;
             }
         }
 
@@ -154,23 +154,11 @@ namespace ASSIGMENT_Danh_Ba
                 }
 
                 LoadDatabase();
-                flag = false;
+                flag = 2;
             }
         }
 
-        private void ASSIGRMENTS_FormClosing(object sender, FormClosingEventArgs e)
-        {
-
-            if (flag == false)
-            {
-                if (MessageBox.Show("Bạn vừa thay đổi Dữ liệu của Danh bạ mà chưa Lưu.\n Bạn Có muốn lưu lại không?",
-                    Erorr,
-                    MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    Sv.QuestionSave();
-                }
-            }
-        }
+       
 
         private void dgv_DanhBa_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -204,19 +192,20 @@ namespace ASSIGMENT_Danh_Ba
                 MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 MessageBox.Show(Sv.Xoa(nguoi, danhBa), Erorr);
+                flag = 3;
             }
 
             LoadDatabase();
+            
         }
 
         private void btn_Luu_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("bạn Muốn Lưu Chứ?", Erorr, MessageBoxButtons.OKCancel) == DialogResult.Yes)
+            if (MessageBox.Show("bạn Muốn Lưu Chứ?", Erorr, MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 Sv.QuestionSave();
                 MessageBox.Show("Lưu Danh bạ Thành Công!", Erorr);
-                flag = true;
-
+                flag = -1;
             }
 
         }
@@ -484,6 +473,20 @@ namespace ASSIGMENT_Danh_Ba
             txt_SDT_2.Text = "";
             txt_Email.Text = "";
             txt_note.Text = "";
+        }
+        
+        private void ASSIGRMENTS_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            if (flag == 1|| flag == 2|| flag == 3)
+            {
+                if (MessageBox.Show("Bạn vừa thay đổi Dữ liệu của Danh bạ mà chưa Lưu.\n Bạn Có muốn lưu lại không?",
+                    Erorr,
+                    MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    Sv.QuestionSave();
+                }
+            }
         }
     }
 }
