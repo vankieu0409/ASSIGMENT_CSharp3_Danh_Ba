@@ -21,11 +21,14 @@ namespace ASSIGMENT_Danh_Ba
         private List<DanhBa> lstDanhBas;
         private List<Nguoi> lstNguoi;
         private string erorrmes=" Thông báo về việc ";
-        private string Erorr = "Thông báo của UBND xã Tuân Chính về việc";
+        private string Erorr = "Thông báo của UBND xã Tuân Chính";
         private int flag = -1;
+        private Guid idWhenClick;
+        private int rowIndex1;
 
         public ASSIGRMENTS()
         {
+            
             Sv = new Services();
             check = new CheckEveryThing();
             lstDanhBas = new List<DanhBa>();
@@ -35,6 +38,7 @@ namespace ASSIGMENT_Danh_Ba
             rbtn_Nam.Checked = true;
             rbtn_nam_search.Checked = true;
             LoadDatabase();
+            
         }
 
         bool CheckEveryThing()
@@ -91,6 +95,7 @@ namespace ASSIGMENT_Danh_Ba
             dgv_DanhBa.Rows.Clear();
             foreach (var x in ListBig)
             {
+                
                 dgv_DanhBa.Rows.Add(x.Ho, x.TenDem, x.Ten, x.NamSinh,
                     x.GioiTinh == 1 ? "Nam" : x.GioiTinh == 0 ? "Nữ" : "",
                     x.SDT1, x.SDT2, x.Email, x.Note);
@@ -166,9 +171,10 @@ namespace ASSIGMENT_Danh_Ba
             txt_Ten.Enabled = false;
             //1. Lấy Index Rows Khi bấm vào Gird
             int rowIndex = e.RowIndex;
+            rowIndex1 = e.RowIndex;
             if (rowIndex == lstNguoi.Count) return;
             // 2. Lấy giá trị tại cột ID
-            //  idAccWhenClick = Convert.ToInt16(gv_data.Rows[rowIndex].Cells[6].Value);
+              
             // 3. có 2 cách để tìm được dối tượng
             // 3.1- Dùng Service dể tìm
             // 3.2 là sử dụng cách lấy giá trị tại cột
@@ -182,6 +188,7 @@ namespace ASSIGMENT_Danh_Ba
             txt_SDT_2.Text = dgv_DanhBa.Rows[rowIndex].Cells[6].Value.ToString();
             txt_Email.Text = dgv_DanhBa.Rows[rowIndex].Cells[7].Value.ToString();
             txt_note.Text = dgv_DanhBa.Rows[rowIndex].Cells[8].Value.ToString();
+          //  idWhenClick =Sv.getListNguoi().Where(c=>c.Ho==txt_ho.Text&&c.TenDem==)
         }
 
         private void btn_Xoa_Click(object sender, EventArgs e)

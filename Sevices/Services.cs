@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Windows.Forms;
 using ASSIGMENT_Danh_Ba.DBContext;
 using ASSIGMENT_Danh_Ba.Interface;
 using ASSIGMENT_Danh_Ba.Models;
@@ -13,22 +13,19 @@ namespace ASSIGMENT_Danh_Ba.Sevices
     public class Services : IServices
     {
         private List<Nguoi> lstNguoi;
-        private List<Nguoi> BienFlag;
         private List<DanhBa> lstDanhBas;
-        private List<DanhBa> BienFlag1;
+      
         private DB_CONTEXT_DanhBa db;// kiểu dữ liệu là con của DbContext
         
 
         public Services()
         {
-            BienFlag = new List<Nguoi>();
+          
             lstDanhBas = new List<DanhBa>();
-            BienFlag1 = new List<DanhBa>();
             lstNguoi = new List<Nguoi>();
             db = new DB_CONTEXT_DanhBa();
             ActiveDB();
-            BienFlag = db.Nguois.AsNoTracking().ToList();
-            BienFlag1 = db.DanhBas.AsNoTracking().ToList();
+      
         }
 
         public List<Nguoi> getListNguoi()
@@ -106,34 +103,10 @@ namespace ASSIGMENT_Danh_Ba.Sevices
                     db.SaveChanges();
                     saved = true;
                 }
-                catch (DbUpdateConcurrencyException ex)
+                catch (Exception e)
                 {
-                    foreach (var entry in ex.Entries)
-                    {
-                        if (entry.Entity is Nguoi)
-                        {
-                            var proposedValues = entry.CurrentValues;
-                            var databaseValues = entry.GetDatabaseValues();
-
-                            foreach (var property in proposedValues.Properties)
-                            {
-                                var proposedValue = proposedValues[property];
-                                var databaseValue = databaseValues[property];
-
-                                // TODO: decide which value should be written to database
-                                // proposedValues[property] = <value to be saved>;
-                            }
-
-                            // Refresh original values to bypass next concurrency check
-                            entry.OriginalValues.SetValues(databaseValues);
-                        }
-                        else
-                        {
-                            throw new NotSupportedException(
-                                "Don't know how to handle concurrency conflicts for "
-                                + entry.Metadata.Name);
-                        }
-                    }
+                    MessageBox.Show("Lưu thất bại", "Error");
+                    return;
                 }
             }
 
