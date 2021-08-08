@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Windows.Forms;
+
 using ASSIGMENT_Danh_Ba.DBContext;
 using ASSIGMENT_Danh_Ba.Interface;
 using ASSIGMENT_Danh_Ba.Models;
@@ -14,18 +16,18 @@ namespace ASSIGMENT_Danh_Ba.Sevices
     {
         private List<Nguoi> lstNguoi;
         private List<DanhBa> lstDanhBas;
-      
+
         private DB_CONTEXT_DanhBa db;// kiểu dữ liệu là con của DbContext
-        
+
 
         public Services()
         {
-          
+
             lstDanhBas = new List<DanhBa>();
             lstNguoi = new List<Nguoi>();
             db = new DB_CONTEXT_DanhBa();
             ActiveDB();
-      
+
         }
 
         public List<Nguoi> getListNguoi()
@@ -62,8 +64,15 @@ namespace ASSIGMENT_Danh_Ba.Sevices
             lstNguoi[temp1] = Nguoi;
             int temp2 = getIndexDanhba(DB);
             lstDanhBas[temp2] = DB;
-            db.Nguois.Update(Nguoi);
-            db.DanhBas.Update(DB);
+            if (db.Nguois.AsNoTracking().ToList().Where(c => c.IdNguoi == Nguoi.IdNguoi).FirstOrDefault() != null)
+            {
+                db.Nguois.Update(Nguoi);
+                db.DanhBas.Update(DB);
+            }
+            else
+            {
+                return "sửa thành công";
+            }
 
             return " sửa thành công";
         }
@@ -74,8 +83,16 @@ namespace ASSIGMENT_Danh_Ba.Sevices
             lstNguoi.RemoveAt(temp1);
             int temp2 = getIndexDanhba(DB);
             lstDanhBas.RemoveAt(temp2);
-            db.Nguois.Remove(Nguoi);
-            db.DanhBas.Remove(DB);
+            if (db.Nguois.ToList().Where(c => c.IdNguoi == Nguoi.IdNguoi).FirstOrDefault() != null) 
+            {
+                db.Nguois.Remove(Nguoi);
+                db.DanhBas.Remove(DB);
+            }
+            else
+            {
+                return "xóa thành công";
+            }
+            
 
             return " xóa thành công";
         }
@@ -94,21 +111,7 @@ namespace ASSIGMENT_Danh_Ba.Sevices
         }
         public void QuestionSave()
         {
-            var saved = false;
-            while (!saved)
-            {
-                try
-                {
-                    // Attempt to save changes to the database
-                    db.SaveChanges();
-                    saved = true;
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show("Lưu thất bại", "Error");
-                    return;
-                }
-            }
+            db.SaveChanges();
 
         }
         private int getIndexNguoi(Nguoi ng)
