@@ -182,7 +182,6 @@ namespace ASSIGMENT_Danh_Ba
             txt_ho.Text = dgv_DanhBa.Rows[rowIndex].Cells[0].Value.ToString();
             txt_tendem.Text = dgv_DanhBa.Rows[rowIndex].Cells[1].Value.ToString();
             txt_Ten.Text = dgv_DanhBa.Rows[rowIndex].Cells[2].Value.ToString();
-            idWhenClick = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
             cbox_namsinh.SelectedIndex = cbox_namsinh.FindString(dgv_DanhBa.Rows[rowIndex].Cells[3].Value.ToString());
             rbtn_Nam.Checked = dgv_DanhBa.Rows[rowIndex].Cells[4].Value.ToString() == "Nam" ? true : false;
             rbtn_Nu.Checked = dgv_DanhBa.Rows[rowIndex].Cells[4].Value.ToString() == "Nữ" ? true : false;
@@ -191,13 +190,14 @@ namespace ASSIGMENT_Danh_Ba
             txt_Email.Text = dgv_DanhBa.Rows[rowIndex].Cells[7].Value.ToString();
             txt_note.Text = dgv_DanhBa.Rows[rowIndex].Cells[8].Value.ToString();
           //  idWhenClick =Sv.getListNguoi().Where(c=>c.Ho==txt_ho.Text&&c.TenDem==)
+          idWhenClick = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
         }
 
         private void btn_Xoa_Click(object sender, EventArgs e)
         {
-            idWhenClick = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
-            Nguoi nguoi = Sv.getListNguoi().Where(c => c.IdNguoi == idWhenClick).FirstOrDefault();
-            DanhBa danhBa = Sv.getlListDanhBa().Where(c => c.IdNguoi == idWhenClick).FirstOrDefault();
+            //idWhenClick = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
+            var nguoi = Sv.getListNguoi().Where(c => c.IdNguoi == idWhenClick).FirstOrDefault();
+            var danhBa = Sv.getlListDanhBa().Where(c => c.IdNguoi == idWhenClick).FirstOrDefault();
             if (MessageBox.Show(erorrmes+ " bạn có muốn Xóa thông tin và Liên Hệ\n của người này không?", Erorr,
                 MessageBoxButtons.YesNo) == DialogResult.Yes)
             {

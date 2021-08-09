@@ -64,7 +64,7 @@ namespace ASSIGMENT_Danh_Ba.Sevices
             lstNguoi[temp1] = Nguoi;
             int temp2 = getIndexDanhba(DB);
             lstDanhBas[temp2] = DB;
-            if (db.Nguois.AsNoTracking().ToList().Where(c => c.IdNguoi == Nguoi.IdNguoi).FirstOrDefault() != null)
+            if (db.Nguois.Where(c => c.IdNguoi == Nguoi.IdNguoi).FirstOrDefault() != null)
             {
                 db.Nguois.Update(Nguoi);
                 db.DanhBas.Update(DB);
@@ -83,16 +83,16 @@ namespace ASSIGMENT_Danh_Ba.Sevices
             lstNguoi.RemoveAt(temp1);
             int temp2 = getIndexDanhba(DB);
             lstDanhBas.RemoveAt(temp2);
-            if (db.Nguois.ToList().Where(c => c.IdNguoi == Nguoi.IdNguoi).FirstOrDefault() != null) 
+            if (db.Nguois.Where(c => c.IdNguoi == Nguoi.IdNguoi) != null)
             {
-                db.Nguois.Remove(Nguoi);
                 db.DanhBas.Remove(DB);
+                db.Nguois.Remove(Nguoi);
             }
             else
             {
                 return "xóa thành công";
             }
-            
+
 
             return " xóa thành công";
         }
