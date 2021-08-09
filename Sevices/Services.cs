@@ -64,7 +64,7 @@ namespace ASSIGMENT_Danh_Ba.Sevices
             lstNguoi[temp1] = Nguoi;
             int temp2 = getIndexDanhba(DB);
             lstDanhBas[temp2] = DB;
-            if (db.Nguois.Where(c => c.IdNguoi == Nguoi.IdNguoi).FirstOrDefault() != null)
+            if (db.Nguois.AsNoTracking().ToList().Where(c => c.IdNguoi == Nguoi.IdNguoi).FirstOrDefault() != null)
             {
                 db.Nguois.Update(Nguoi);
                 db.DanhBas.Update(DB);

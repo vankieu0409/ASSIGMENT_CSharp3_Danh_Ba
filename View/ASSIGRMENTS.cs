@@ -139,7 +139,7 @@ namespace ASSIGMENT_Danh_Ba
             }
             else
             {
-                //idWhenClick = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
+                idWhenClick = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
                 Nguoi nguoi = Sv.getListNguoi().Where(c => c.IdNguoi == idWhenClick).FirstOrDefault();
                 nguoi.Ho = txt_ho.Text;
                 nguoi.TenDem = txt_tendem.Text;
@@ -195,7 +195,7 @@ namespace ASSIGMENT_Danh_Ba
 
         private void btn_Xoa_Click(object sender, EventArgs e)
         {
-            //idWhenClick = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
+            idWhenClick = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
             var nguoi = Sv.getListNguoi().Where(c => c.IdNguoi == idWhenClick).FirstOrDefault();
             var danhBa = Sv.getlListDanhBa().Where(c => c.IdNguoi == idWhenClick).FirstOrDefault();
             if (MessageBox.Show(erorrmes+ " bạn có muốn Xóa thông tin và Liên Hệ\n của người này không?", Erorr,
