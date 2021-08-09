@@ -139,7 +139,7 @@ namespace ASSIGMENT_Danh_Ba
             }
             else
             {
-                idWhenClick = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
+                //idWhenClick = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
                 Nguoi nguoi = Sv.getListNguoi().Where(c => c.IdNguoi == idWhenClick).FirstOrDefault();
                 nguoi.Ho = txt_ho.Text;
                 nguoi.TenDem = txt_tendem.Text;
@@ -222,7 +222,7 @@ namespace ASSIGMENT_Danh_Ba
 
         private void txt_Search_ten_TextChanged(object sender, EventArgs e)
         {
-            //txt_Search_ten.Text = "";
+            txt_Search_ten.Text = "";
             LoadDatabaseSearch(txt_Search_ten.Text);
 
         }
