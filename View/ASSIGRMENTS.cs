@@ -139,15 +139,15 @@ namespace ASSIGMENT_Danh_Ba
             }
             else
             {
-                var IDkey = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
-                Nguoi nguoi = Sv.getListNguoi().Where(c => c.IdNguoi == IDkey).FirstOrDefault();
+                //idWhenClick = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
+                Nguoi nguoi = Sv.getListNguoi().Where(c => c.IdNguoi == idWhenClick).FirstOrDefault();
                 nguoi.Ho = txt_ho.Text;
                 nguoi.TenDem = txt_tendem.Text;
                 nguoi.Ten = txt_Ten.Text;
                 nguoi.NamSinh = Convert.ToInt16(cbox_namsinh.Text);
                 nguoi.GioiTinh = rbtn_Nam.Checked ? 1 : 0;
 
-                var idDB = Sv.getlListDanhBa().Where(c => c.IdNguoi == IDkey).Select(c => c.IdDanhBa).FirstOrDefault();
+                var idDB = Sv.getlListDanhBa().Where(c => c.IdNguoi == idWhenClick).Select(c => c.IdDanhBa).FirstOrDefault();
                 DanhBa danhBa = Sv.getlListDanhBa().Where(c => c.IdDanhBa == idDB).FirstOrDefault();
                 danhBa.SDT1 = txt_SDT_1.Text;
                 danhBa.SDT2 = txt_SDT_2.Text;
@@ -168,7 +168,8 @@ namespace ASSIGMENT_Danh_Ba
 
         private void dgv_DanhBa_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            txt_Ten.Enabled = false;
+            
+            
             //1. Lấy Index Rows Khi bấm vào Gird
             int rowIndex = e.RowIndex;
             rowIndex1 = e.RowIndex;
@@ -181,6 +182,7 @@ namespace ASSIGMENT_Danh_Ba
             txt_ho.Text = dgv_DanhBa.Rows[rowIndex].Cells[0].Value.ToString();
             txt_tendem.Text = dgv_DanhBa.Rows[rowIndex].Cells[1].Value.ToString();
             txt_Ten.Text = dgv_DanhBa.Rows[rowIndex].Cells[2].Value.ToString();
+            idWhenClick = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
             cbox_namsinh.SelectedIndex = cbox_namsinh.FindString(dgv_DanhBa.Rows[rowIndex].Cells[3].Value.ToString());
             rbtn_Nam.Checked = dgv_DanhBa.Rows[rowIndex].Cells[4].Value.ToString() == "Nam" ? true : false;
             rbtn_Nu.Checked = dgv_DanhBa.Rows[rowIndex].Cells[4].Value.ToString() == "Nữ" ? true : false;
@@ -193,9 +195,9 @@ namespace ASSIGMENT_Danh_Ba
 
         private void btn_Xoa_Click(object sender, EventArgs e)
         {
-            var IDkey = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
-            Nguoi nguoi = Sv.getListNguoi().Where(c => c.IdNguoi == IDkey).FirstOrDefault();
-            DanhBa danhBa = Sv.getlListDanhBa().Where(c => c.IdNguoi == IDkey).FirstOrDefault();
+            idWhenClick = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
+            Nguoi nguoi = Sv.getListNguoi().Where(c => c.IdNguoi == idWhenClick).FirstOrDefault();
+            DanhBa danhBa = Sv.getlListDanhBa().Where(c => c.IdNguoi == idWhenClick).FirstOrDefault();
             if (MessageBox.Show(erorrmes+ " bạn có muốn Xóa thông tin và Liên Hệ\n của người này không?", Erorr,
                 MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
