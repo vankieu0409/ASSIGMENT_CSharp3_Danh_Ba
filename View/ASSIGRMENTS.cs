@@ -81,8 +81,8 @@ namespace ASSIGMENT_Danh_Ba
             var ListBig = (from a in lstNguoi
                            join b in lstDanhBas on a.IdNguoi equals b.IdNguoi
                            select new
-                           { a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note }).ToList();
-            dgv_DanhBa.ColumnCount = 9;
+                           {a.IdNguoi, a.Ho, a.TenDem, a.Ten, a.NamSinh, a.GioiTinh, b.SDT1, b.SDT2, b.Email, b.Note }).ToList();
+            dgv_DanhBa.ColumnCount = 10;
             dgv_DanhBa.Columns[0].Name = " Họ ";
             dgv_DanhBa.Columns[1].Name = " Tên Đệm";
             dgv_DanhBa.Columns[2].Name = " Tên";
@@ -92,13 +92,15 @@ namespace ASSIGMENT_Danh_Ba
             dgv_DanhBa.Columns[6].Name = " SĐT 2";
             dgv_DanhBa.Columns[7].Name = " Email";
             dgv_DanhBa.Columns[8].Name = " Ghi Chú";
+            dgv_DanhBa.Columns[9].Name = "ID";
+            dgv_DanhBa.Columns["ID"].Visible = false;
             dgv_DanhBa.Rows.Clear();
             foreach (var x in ListBig)
             {
                 
                 dgv_DanhBa.Rows.Add(x.Ho, x.TenDem, x.Ten, x.NamSinh,
                     x.GioiTinh == 1 ? "Nam" : x.GioiTinh == 0 ? "Nữ" : "",
-                    x.SDT1, x.SDT2, x.Email, x.Note);
+                    x.SDT1, x.SDT2, x.Email, x.Note,x.IdNguoi);
             }
 
         }
@@ -189,13 +191,14 @@ namespace ASSIGMENT_Danh_Ba
             txt_SDT_2.Text = dgv_DanhBa.Rows[rowIndex].Cells[6].Value.ToString();
             txt_Email.Text = dgv_DanhBa.Rows[rowIndex].Cells[7].Value.ToString();
             txt_note.Text = dgv_DanhBa.Rows[rowIndex].Cells[8].Value.ToString();
-          //  idWhenClick =Sv.getListNguoi().Where(c=>c.Ho==txt_ho.Text&&c.TenDem==)
-          idWhenClick = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
+            idWhenClick = Guid.Parse( dgv_DanhBa.Rows[rowIndex].Cells[9].Value.ToString());
+            //idWhenClick = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
         }
 
         private void btn_Xoa_Click(object sender, EventArgs e)
         {
-            idWhenClick = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
+
+           // idWhenClick = Sv.getListNguoi().Where(c => c.Ten == txt_Ten.Text).Select(c => c.IdNguoi).FirstOrDefault();
             var nguoi = Sv.getListNguoi().Where(c => c.IdNguoi == idWhenClick).FirstOrDefault();
             var danhBa = Sv.getlListDanhBa().Where(c => c.IdNguoi == idWhenClick).FirstOrDefault();
             if (MessageBox.Show(erorrmes+ " bạn có muốn Xóa thông tin và Liên Hệ\n của người này không?", Erorr,
